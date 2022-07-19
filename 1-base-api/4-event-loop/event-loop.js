@@ -29,7 +29,7 @@ event loop 的每个阶段都有一个任务队列，当 event loop 进入给定
 1. timers：执行 setTimeout、setInterval 回调
 2. pending callbacks：执行 I/O（文件、网络等） 回调
 3. idle, prepare：仅供系统内部调用
-4. poll：获取新的 I/O 事件，执行相关回调，在适当条件下把阻塞 node
+4. poll：获取新的 I/O 事件，执行相关回调，在适当条件下会阻塞 node
 5. check：setImmediate 回调在此阶段执行
 6. close callbacks：执行 socket 等的 close 事件回调
 日常开发中绝大部分异步任务都是在 timers、poll、check 阶段处理的
