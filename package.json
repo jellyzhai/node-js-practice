@@ -1,0 +1,22 @@
+{
+  "name": "node-js-practice",
+  "version": "1.0.0",
+  "description": "practice for node.js",
+  "main": "utils.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jellyzhai/node-js-practice.git"
+  },
+  "author": "jellyzhai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jellyzhai/node-js-practice/issues"
+  },
+  "homepage": "https://github.com/jellyzhai/node-js-practice#readme",
+  "dependencies": {
+    "chokidar": "^3.5.3"
+  }
+}

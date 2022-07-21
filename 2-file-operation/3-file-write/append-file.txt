@@ -1,0 +1,2 @@
+use fs.writeFile to write content.
+second use fs.writeFile to write content.
