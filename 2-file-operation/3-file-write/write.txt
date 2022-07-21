@@ -1,0 +1,2 @@
+string from buffer.
+hi there.
