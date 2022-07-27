@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jellyzhai/node-js-practice#readme",
   "dependencies": {
-    "chokidar": "^3.5.3"
+    "chokidar": "^3.5.3",
+    "string_decoder": "^1.3.0"
   }
 }
