@@ -8,7 +8,8 @@ const template = handlebars.compile(htmlTplBuffer.toString());
 
 const mimeTypes = require("mime-types");
 const naturalCompare = require("natural-compare");
-const defaultConfig = require("./2-static-server-config");
+const defaultConfig = require(path.join(process.cwd(), "server-config.js"));
+const handleCache = require('../4-response-content-compress/2-browser-cache');
 
 class StaticServer {
   constructor(options = {}) {
@@ -20,7 +21,8 @@ class StaticServer {
 
     this.server = http
       .createServer((req, res) => {
-        const { url, method } = req;
+        const { url, method, headers } = req;
+        // console.log("headers: ", headers);
 
         if (method !== "GET") {
           res.writeHead(404, {
@@ -42,6 +44,9 @@ class StaticServer {
             const stats = fs.statSync(filePath);
             const direntList = [];
 
+            // 在访问文件有效时，处理缓存响应头
+            handleCache(req, res);
+
             if (stats.isDirectory()) {
               const dir = fs.opendirSync(filePath);
               let dirent = dir.readSync();
@@ -56,9 +61,7 @@ class StaticServer {
               }
               dir.close();
 
-              res.writeHead(200, {
-                "Content-Type": "text/html; charset=utf-8",
-              });
+              res.setHeader("Content-Type", "text/html; charset=utf-8");
 
               direntList.sort((x, y) => {
                 if (x.type > y.type) {
@@ -73,16 +76,14 @@ class StaticServer {
               const html = template({ direntList });
               res.end(html);
             } else {
-              res.writeHead(200, {
-                "Content-Type": mimeTypes.contentType(path.extname(filePath)),
-              });
+              res.setHeader("Content-Type", mimeTypes.contentType(path.extname(filePath)));
               fs.createReadStream(filePath).pipe(res);
             }
           }
         });
       })
       .listen(port, () => {
-        console.log(`成功监听服务器的 ${port} 端口`);
+        console.log(`成功启动服务器：http://127.0.0.1:${port}`);
       });
   }
 
