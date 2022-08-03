@@ -1,4 +1,4 @@
-const onionModel = require('./1-middle-ware-instance');
+const onionModel = require('./1-onionModel');
 
 const middlewares = [];
 const context = {};
