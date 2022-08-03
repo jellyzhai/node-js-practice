@@ -26,11 +26,14 @@ function handleCache(req, res) {
     }
 
     if (enableEtag) {
-        const ifNoneMath = headers['if-none-match'];
-        const resEtag = etag(fs.readFileSync(filePath))
+      const ifNoneMath = headers["if-none-match"];
 
-        res.setHeader('Etag', resEtag);
-        res.statusCode = ifNoneMath === resEtag ? 304 : 200;
+      // 可以改成异步读取文件内容了，但实际应用同样不会这么做，一般有离线任务计算
+      const content = fs.readFileSync(filePath);
+      const resEtag = etag(content);
+
+      res.setHeader("Etag", resEtag);
+      res.statusCode = ifNoneMath === resEtag ? 304 : 200;
     }
 
     if (enableLastModified) {
